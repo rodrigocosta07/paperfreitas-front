@@ -13,7 +13,7 @@ import DrawerComponent from "../components/drawer";
 import React from "react";
 import { listPages } from "../consts/pages";
 import Pdv from "./pdv";
-import Products from "./products";
+import Products from "./products/products";
 import Report from "./report";
 
 const drawerWidth = 240;
@@ -47,7 +47,7 @@ function Home(props: Props) {
       (item: { id: string; name: string }) => item.id === page
     );
     setSelectedPage(listPages[pageId].id);
-    handleDrawerClose()
+    handleDrawerClose();
   };
 
   const renderSelectedPage = () => {
@@ -69,11 +69,11 @@ function Home(props: Props) {
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: isClosing ? `calc(100% - ${drawerWidth}px)` : `100%` },
-          ml: { sm: `${drawerWidth}px` },
+          width: { sm: mobileOpen ? `calc(100% - ${drawerWidth}px)` : `100%` },
+          ml: { sm: mobileOpen ? `${drawerWidth}px` : "0px" },
         }}
       >
-        <Container maxWidth="xl">
+        <div style={{ paddingInline: 16 }}>
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -94,7 +94,7 @@ function Home(props: Props) {
               onClick={handleDrawerToggle}
               sx={{
                 mr: 2,
-                display: { xs: "none", md: "flex" },
+                display: { md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
@@ -106,7 +106,7 @@ function Home(props: Props) {
               Paper Freitas
             </Typography>
           </Toolbar>
-        </Container>
+        </div>
       </AppBar>
       <Drawer
         container={container}
@@ -115,10 +115,9 @@ function Home(props: Props) {
         onTransitionEnd={handleDrawerTransitionEnd}
         onClose={handleDrawerClose}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true,
         }}
         sx={{
-          // display: { xs: "block", sm: "none" },
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
         }}
       >
